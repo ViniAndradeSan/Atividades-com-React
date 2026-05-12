@@ -3,7 +3,7 @@ import InputField from "./InputField"; // Importação correta
 function Formulario() { 
   return (
     <form>
-      <InputField label="Nome" type="text" name="nome" />
+      <InputField label="Nome" type="text" name="nome" placeholder={} />
       <InputField label="Email" type="email" name="email" />
       <InputField label="Senha" type="password" name="senha" />
       <InputField label= "checkbox" type="checkbox" name="termos" />
