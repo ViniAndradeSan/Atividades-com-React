@@ -38,6 +38,7 @@ function Formulario() {
         label="file" 
         type="file" 
         name="arquivo" />
+      <button type="submit">Enviar</button>
     </form> 
   );
 }
