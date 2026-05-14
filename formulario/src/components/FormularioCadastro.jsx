@@ -1,29 +1,33 @@
-  import InputField from "./InputField"; 
-  import { useState } from "react"; 
+  import ButaoEnviar from "./ButaoEnviar";
+  import InputField from "./InputField";
+  import { use, useState } from "react"; 
 
   function Formulario() {
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [telefone, setTelefone] = useState("");
-    const [erro, setErro] = useState("");
-    const [sucesso, setSucesso] = useState(false);
+    // const [nome, setNome] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [telefone, setTelefone] = useState("");
+    // const [termos, setTermos] = useState(false);
+    // const [erro, setErro] = useState("");
+    // const [sucesso, setSucesso] = useState(false);
+    const [validacao, setValidacao] = useState({erro:"", sucesso: false})
+    const [user, setUser] = useState({nome: "", email: "", telefone: "", termos: false})
 
     const handleSubmit = (e) => {
     e.preventDefault() // não deixa recarregar a pagina
     
-    if (nome.trim() === ""){
+    if (user.nome.trim() === ""){
       setErro('O campo desse nome está sem nada, preencha!')
       console.log(erro)
       return
     } 
 
-    if (telefone.length !== 11) {
+    if (user.telefone.length !== 11) {
       setErro('O campo telefone ta faltado, preencha corretamente!')
       console.log(erro)
       return
     }
 
-    if (!termos){
+    if (!user.termos){
       setErro('É preciso ativar o concordo com os termos de uso!')
       console.log(erro)
       return
@@ -32,38 +36,47 @@
 
     setErro('')
     setSucesso(true)
-    console.log({nome, email, telefone}) // Envio para o banco
+    console.log(user) // Envio para o banco
     setSucesso(false)
   } 
 
     return (
       <form onSubmit={handleSubmit}>
-        {erro && <p style={{color: "red"}}>{erro}</p>}
-        {sucesso && <p style={{color: "green"}}>Cadastrado !!</p>}
+        {validacao.erro && <p style={{color: "red"}}>{validacao.erro}</p>}
+        {validacao.sucesso && <p style={{color: "green"}}>Cadastrado !!</p>}
         <InputField label="Nome" 
           type="text" name="nome" 
           placeholder={"nome"} 
-          value={nome} 
-          onChange={(e) => setNome(e.target.value)} />
+          value={user.nome} 
+          onChange={(e) => setUser((dados) => ({
+            ...dados, nome: e.target.value
+          }))} />
         <InputField 
           label="Email" 
           type="email" 
           name="email" 
           placeholder={"email"} 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} />
+          value={user.email} 
+          onChange={(e) => setUser((dados) => ({
+            ...dados, email: e.target.value 
+          }))} />
         <InputField 
           label="Telefone" 
           type="tel" 
           name="telefone" 
           placeholder={"telefone"} 
-          value={telefone} 
-          onChange={(e) => setTelefone(e.target.value)} />
+          value={user.telefone} 
+          onChange={(e) => setUser((dados) => ({
+            ...dados, telefone: e.target.value 
+          }))} />
         <InputField 
           label= "Termos de uso: " 
           type="checkbox" 
-          name="termos" />
-          value={}
+          name="termos" 
+          checked={user.termos}
+          onChange={(e) => setUser((dados) => ({
+            ...dados, termos: e.target.value
+          }))} />
         <InputField 
           label="date" 
           type="date" 
@@ -72,7 +85,11 @@
           label="file" 
           type="file" 
           name="arquivo" />
-        <button type="submit">Enviar</button>
+        <ButaoEnviar />
+
+      <div>
+        <p>Nome: {user.nome}</p>
+      </div>
       </form> 
     );
   }

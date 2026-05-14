@@ -1,7 +1,7 @@
-function butaoEnviar() {
+function ButaoEnviar() {
   return (
     <button type="submit">Enviar</button>
   );
 }
 
-export default butaoEnviar;
+export default ButaoEnviar;
